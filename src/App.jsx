@@ -1,15 +1,16 @@
 import './App.css';
+import React from 'react';
 
-import Navbar from './componentes/navbar';
-import Home from './view/home/home';
+import Navbar from './componentes/Navbar';
 
-function App() {
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Rotas from './rotas';
+
+export default function App() {
   return (
-    <div className="container">
-      <Navbar />
-      <Home />
-    </div>
+      <Router>
+        <Navbar />
+        <Rotas />
+      </Router>
   );
 }
-
-export default App;
