@@ -40,3 +40,10 @@ export function saveProducts(product) {
     haveProduct.push(product)
     localStorage.setItem(TOKEN, JSON.stringify(haveProduct))
 }
+
+export function getProducts() {
+  let product = localStorage.getItem(TOKEN)
+  return (
+    JSON.parse(product)
+  )
+}
