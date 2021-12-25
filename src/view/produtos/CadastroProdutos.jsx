@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { saveProducts } from '../../services/cadProdService';
+import Alert from '../../componentes/alert/Alert';
 
 const initial = {
     nome: "",
@@ -11,6 +12,8 @@ const initial = {
 
 export default function CadastroProdutos() {
     const [cadValues, setCadValues] = useState(initial)
+    const [allOk, setAllOk] = useState(null)
+    const [errors, setErrors] = useState([])
 
     function handleChange(e) {
        const { name, value } = e.target; //destruturando name e value do target
@@ -18,14 +21,21 @@ export default function CadastroProdutos() {
            {...cadValues, [name]: value} //destructuring
        )
     }
-    function onSubmit(e) {
-        saveProducts(cadValues)
+
+    async function onSubmit(e) {
+        try {
+          await saveProducts(cadValues)
+          setAllOk(true)
+        } catch(error) {
+          setErrors(() => errors.push(error.errors))
+          setAllOk(false)
+        }
         clear()
     }
+
     const clear = () => {
         setCadValues(initial)
     }
-
 
     return (
         <>
@@ -33,6 +43,8 @@ export default function CadastroProdutos() {
           <div className="card-header">Cadastrar Produtos</div>
             <div className="card-body">
 
+             <Alert allOk={allOk}/>
+             
               <div className="row">
                  <div className="col-md-6">
                      <div className="form-group">
@@ -43,6 +55,7 @@ export default function CadastroProdutos() {
                            value={cadValues.nome} 
                            className="form-control"
                            onChange={handleChange} 
+                           required
                          />
                      </div>
                  </div>
