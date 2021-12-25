@@ -1,23 +1,24 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 
 import Home from './view/home/Home';
 import CadastroProdutos from './view/produtos/CadastroProdutos';
 import ListaProdutos from './view/produtos/ListaProdutos';
-import { Routes, Route } from 'react-router-dom';
+import * as constRotas from './constRotas'
 
 export default function Rotas() {
     return ( 
         <Routes>
             <Route
-                path="/listaProdutos" 
+                path={constRotas.LISTPRODUCTS}
                 element={<ListaProdutos />} 
             />
             <Route
-                path="/"
+                path={constRotas.HOME}
                 element={<Home />} 
             />
             <Route
-                path="/cadastroProdutos"
+                path={constRotas.CADPRODUCTS}
                 element={<CadastroProdutos />} 
             />
         </Routes>
