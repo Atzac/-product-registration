@@ -47,3 +47,7 @@ export function getProducts() {
     JSON.parse(product)
   )
 }
+
+export function delProduct() {
+  localStorage.removeItem(TOKEN)
+}

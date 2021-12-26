@@ -1,18 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { getProducts } from '../../services/cadProdService';
+import { useNavigate } from 'react-router-dom'
+
+import { getProducts, delProduct } from '../../services/cadProdService';
+import * as constRotas from '../../constRotas'
 
 export default function ListaProdutos() {
+    const navigate = useNavigate()
     const [products, setProducts] = useState([])
 
     useEffect(() => {
        setProducts(() => getProducts())
     }, [])
 
+    const redirectEdit = (id) => {
+        navigate(`/cadastroProdutos/${id}`);
+        console.log("id passada da lista ",id)
+    }
+    const del = () => {
+        delProduct()
+    }
 
     return (
         <div className="card border-secondary mb-3">
-          <div className="card-header">Produtos</div>
           
+          <div className="card-header">Produtos</div>
             <div className="card-body">
             <table className="table table-hover">
             <thead>
@@ -34,6 +45,22 @@ export default function ListaProdutos() {
                         <td>{product.preco}</td>
                         <td>{product.fornecedor}</td>
                         <td>{product.desc}</td>
+                        <td> 
+                            <button 
+                               className="btn btn-outline-primary"
+                               onClick={() => redirectEdit(product.id)}
+                            > 
+                            Editar
+                             </button>
+                        </td>
+                        <td> 
+                            <button 
+                               className="btn btn-outline-danger"
+                               onClick={redirectEdit}
+                            >
+                            Excluir 
+                            </button>
+                        </td>
                     </tr>
                 )
                 })

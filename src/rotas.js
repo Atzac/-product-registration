@@ -10,15 +10,19 @@ export default function Rotas() {
     return ( 
         <Routes>
             <Route
-                path={constRotas.LISTPRODUCTS}
-                element={<ListaProdutos />} 
-            />
-            <Route
                 path={constRotas.HOME}
                 element={<Home />} 
             />
             <Route
+                path={constRotas.LISTPRODUCTS}
+                element={<ListaProdutos />} 
+            />
+            <Route
                 path={constRotas.CADPRODUCTS}
+                element={<CadastroProdutos />} 
+            />
+            <Route
+                path={constRotas.CADPRODUCTSID}
                 element={<CadastroProdutos />} 
             />
         </Routes>

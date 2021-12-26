@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { saveProducts } from '../../services/cadProdService';
+import React, { useEffect, useState } from 'react';
+import { getProducts, saveProducts } from '../../services/cadProdService';
 import Alert from '../../componentes/alert/Alert';
+import { useParams } from 'react-router-dom';
 
 const initial = {
     nome: "",
@@ -14,6 +15,17 @@ export default function CadastroProdutos() {
     const [cadValues, setCadValues] = useState(initial)
     const [allOk, setAllOk] = useState(null)
     const [errors, setErrors] = useState([])
+    const { id } = useParams() 
+
+    useEffect(() => {
+      if(id) {
+        const response = getProducts().filter( product => product.id === id) //filtra produtos cujo id = id do parametro
+        if (response.length === 1) { 
+           const data = response[0]
+           setCadValues({...data})
+        }
+      }
+    }, []) //ao carregar a tela, verifica se tem (id) como parametro na url e puxa os dados caso true
 
     function handleChange(e) {
        const { name, value } = e.target; //destruturando name e value do target
@@ -120,9 +132,6 @@ export default function CadastroProdutos() {
                 </div>
                 <div className="col-md-1">
                     <button className="btn btn-outline-dark" onClick={clear}>Limpar</button> 
-                </div>
-                <div className="col-md-1">
-                    <button className="btn btn-outline-danger">Cancelar</button> 
                 </div>
               </div>
             </div>
