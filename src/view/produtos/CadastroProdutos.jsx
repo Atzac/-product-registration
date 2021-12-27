@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getProducts, saveProducts } from '../../services/cadProdService';
-import Alert from '../../componentes/alert/Alert';
 import { useParams } from 'react-router-dom';
+import Alert from '../../componentes/alert/Alert';
+import Card from '../../componentes/card/Card';
 
 const initial = {
     nome: "",
@@ -53,16 +54,8 @@ export default function CadastroProdutos() {
     }
 
     return (
-        <>
-        <div className="card border-secondary mb-3">
-
-          <div className="card-header">
-            {update? "Editar Produto": "Cadastrar Produtos"}
-          </div>
-
-            <div className="card-body">
+        <Card header={update? <h1>Editar Produto</h1>: <h1>Cadastrar Produtos</h1>}>
              <Alert allOk={allOk}/>
-             
               <div className="row">
                  <div className="col-md-6">
                      <div className="form-group">
@@ -117,7 +110,6 @@ export default function CadastroProdutos() {
                          </div>
                      </div>
               </div>
-
               <div className="row">                
                  <div className="col-md-12">
                     <div className="form-group">
@@ -131,8 +123,6 @@ export default function CadastroProdutos() {
                     </div>
                  </div>
               </div>
-              
-
               <div className="row mt-3">                
                 <div className="col-md-1">
                     <button className="btn btn-outline-success" onClick={onSubmit}>Salvar</button> 
@@ -141,8 +131,6 @@ export default function CadastroProdutos() {
                     <button className="btn btn-outline-dark" onClick={clear}>Limpar</button> 
                 </div>
               </div>
-            </div>
-        </div>
-        </>
+        </Card>
     )
 }

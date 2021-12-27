@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 
 import { getProducts, delProduct } from '../../services/cadProdService';
+import Card from '../../componentes/card/Card';
 import * as constRotas from '../../constRotas'
+import TabelaProdutos from './TabelaProdutos';
 
 export default function ListaProdutos() {
     const navigate = useNavigate()
@@ -13,7 +15,7 @@ export default function ListaProdutos() {
     }, [])
 
     const redirectEdit = (id) => {
-        navigate(`/cadastroProdutos/${id}`);
+        navigate(`${constRotas.CADPRODUCTS}/${id}`);
     }
 
     const del = (id) => {
@@ -22,53 +24,12 @@ export default function ListaProdutos() {
     }
 
     return (
-        <div className="card border-secondary mb-3">
-          
-          <div className="card-header">Produtos</div>
-            <div className="card-body">
-            <table className="table table-hover">
-            <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Preço</th>
-                <th scope="col">Fornecedor</th>
-                <th scope="col">Descrição</th>
-            </tr>
-            </thead>
-            <tbody>
-                {
-                products.map( (product, index) => {
-                return (
-                    <tr key={index}>
-                        <td>{product.id}</td>
-                        <td>{product.nome}</td>
-                        <td>{product.preco}</td>
-                        <td>{product.fornecedor}</td>
-                        <td>{product.desc}</td>
-                        <td> 
-                            <button 
-                               className="btn btn-outline-primary"
-                               onClick={() => redirectEdit(product.id)}
-                            > 
-                            Editar
-                             </button>
-                        </td>
-                        <td> 
-                            <button 
-                               className="btn btn-outline-danger"
-                               onClick={() => del(product.id)}
-                            >
-                            Excluir 
-                            </button>
-                        </td>
-                    </tr>
-                )
-                })
-                }
-            </tbody>
-            </table>
-            </div>
-        </div>
+        <Card header={<h1>Produtos</h1>}>
+            <TabelaProdutos 
+               products={products}
+               redirectEdit={redirectEdit}
+               del={del}
+            />
+        </Card>
     )
 }

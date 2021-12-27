@@ -8,9 +8,7 @@ const Home = () => {
                 <h1 className="display-3 mt-5">Olá!</h1>
                 <p className="lead">Esta é uma aplicação básica para cadastro de produtos.</p> 
                 <p>Utilize a barra de navegação para acessar as funcionalidades</p>
-                <p className="lead">
-                <a className="btn btn-dark btn-lg" href="#" role="button">Acessar</a>
-                </p>
+                
             </div>
            {/* </div>   */}
         </>
