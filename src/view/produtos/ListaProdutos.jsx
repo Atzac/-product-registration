@@ -14,10 +14,11 @@ export default function ListaProdutos() {
 
     const redirectEdit = (id) => {
         navigate(`/cadastroProdutos/${id}`);
-        console.log("id passada da lista ",id)
     }
-    const del = () => {
-        delProduct()
+
+    const del = (id) => {
+        delProduct(id)
+        setProducts(() => getProducts())
     }
 
     return (
@@ -56,7 +57,7 @@ export default function ListaProdutos() {
                         <td> 
                             <button 
                                className="btn btn-outline-danger"
-                               onClick={redirectEdit}
+                               onClick={() => del(product.id)}
                             >
                             Excluir 
                             </button>

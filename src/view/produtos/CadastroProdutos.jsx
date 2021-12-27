@@ -15,10 +15,12 @@ export default function CadastroProdutos() {
     const [cadValues, setCadValues] = useState(initial)
     const [allOk, setAllOk] = useState(null)
     const [errors, setErrors] = useState([])
+    const [update, setUpdate] = useState(false)
     const { id } = useParams() 
 
     useEffect(() => {
       if(id) {
+        setUpdate(true)
         const response = getProducts().filter( product => product.id === id) //filtra produtos cujo id = id do parametro
         if (response.length === 1) { 
            const data = response[0]
@@ -39,6 +41,7 @@ export default function CadastroProdutos() {
           await saveProducts(cadValues)
           setAllOk(true)
         } catch(error) {
+          console.log(error)
           setErrors(() => errors.push(error.errors))
           setAllOk(false)
         }
@@ -52,9 +55,12 @@ export default function CadastroProdutos() {
     return (
         <>
         <div className="card border-secondary mb-3">
-          <div className="card-header">Cadastrar Produtos</div>
-            <div className="card-body">
 
+          <div className="card-header">
+            {update? "Editar Produto": "Cadastrar Produtos"}
+          </div>
+
+            <div className="card-body">
              <Alert allOk={allOk}/>
              
               <div className="row">
@@ -77,6 +83,7 @@ export default function CadastroProdutos() {
                             <input 
                               type="text" 
                               name="id"
+                              disabled={update}
                               value={cadValues.id} 
                               className="form-control" 
                               onChange={handleChange}

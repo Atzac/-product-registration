@@ -25,6 +25,16 @@ export function Validation(product) {
 
 }
 
+export function catchIndex(id) {
+  let index = null
+  getProducts().forEach( (product, i) => {
+    if (product.id === id) {
+      index = i
+    }
+  })
+  return index;
+}
+
 export function saveProducts(product) {
     Validation(product)
 
@@ -37,17 +47,31 @@ export function saveProducts(product) {
       haveProduct = JSON.parse(haveProduct)
     }
 
-    haveProduct.push(product)
+    const index = catchIndex(product.id)
+    if (index === null) {
+      haveProduct.push(product)
+    } else {
+      haveProduct[index] = product
+    }
+
     localStorage.setItem(TOKEN, JSON.stringify(haveProduct))
 }
 
 export function getProducts() {
   let product = localStorage.getItem(TOKEN)
+  if (!product) {
+    return []
+  }
   return (
     JSON.parse(product)
   )
 }
 
-export function delProduct() {
-  localStorage.removeItem(TOKEN)
+export function delProduct(id) {
+  const index = catchIndex(id)
+  if (index !== null) {
+    const products = getProducts()
+    products.splice(index, 1)
+    localStorage.setItem(TOKEN, JSON.stringify(products))
+  }
 }
